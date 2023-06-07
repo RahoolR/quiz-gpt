@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js">
+$("#quiz_template").hide()
+</script>
+<script>
+const API_KEY = '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'
+  
+  const API_prompt = {
+    "model": "text-davinci-003",
+    "prompt": "Give me a trivia question with 4 choices and answer in json format",
+    "temperature": 1,
+    "max_tokens": 1372,
+    "top_p": 1,
+    "frequency_penalty": 0,
+    "presence_penalty": 0
+  }
+$(document).ready(function(){
+  $("#start_button").click(function(){
+    $("#start_button").hide();
+    $("#start").hide();
+    $(".a").css("visibility","visible");
+    
+
+    
+  });
+  var xhr = new XMLHttpRequest();
+  $("#submit").click(function(){
+    $.ajax({
+    url: "https://api.openai.com/v1/completions",
+    method: "POST",
+    contentType: "application/json",
+    beforeSend: function(xhr) {
+    xhr.setRequestHeader("Authorization", "Bearer " +API_KEY)
+    },
+    data: JSON.stringify(API_prompt),
+    success: function(x){
+    console.log(x);
+    //process the JSON data etc
+    }
+    });
+    //$.post("https://api.openai.com/v1/completions",
+    //{
+    //  method : 'POST', 
+    //  headers : {
+    //    "Content-Type" : "application/json",
+    //    "Authorization" : "Bearer " + API_KEY 
+    //  }, 
+    //  body : JSON.stringify(API_prompt)
+    //},
+  //function(data, status){
+  //  alert("Data: " + data + "\nStatus: " + status);
+  //});
+    
+  
+  });
+  $("#show").click(function(){
+    $("p").show();
+  });
+});
+</script>
+</head>
+<style>
+form.a { visibility : hidden} 
+</style>
+<body>
+<h1 id = "start">Start Quiz</h1>
+<button id = "start_button">Start</button>
+
+<form class= "a" id = "quiz_template"  >
+	
+          <label >{question}</label>
+          
+          <br></br>
+          <input type = 'radio' id = 'A' name = 'user_answer' value = {optionA}></input>
+          <label>{optionA}</label>
+          <br></br>
+          <input type = 'radio' name = 'user_answer' value = {optionB}></input>
+          <label>{optionB}</label>
+          <br></br>
+          
+          <input type = 'radio' name = 'user_answer' value = {optionC}></input> 
+          <br></br>
+          
+          <input type = 'radio' name = 'user_asnwer' value = {optionD}></input>
+          <br></br>
+          
+          <input id = "submit" type = 'submit' ></input>
+        
+</form>
+
+</body>
+</html>

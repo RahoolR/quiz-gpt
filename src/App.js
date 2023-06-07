@@ -1,8 +1,7 @@
 import './App.css';
 import { useState } from 'react';
 
-const key = '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'
-const API_KEY = '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'
+const API_KEY = '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'
 function App() {
   const [question, setQuestion] = useState("Question")
   const [optionA, optionB, optionC, optionD] =['a','b','c','d'] 
@@ -19,18 +18,18 @@ function App() {
   }
   
   
-  async function openai_api(event){
+  function openai_api(event){
     console.log("call openapi")
-    event.preventDefault()
-    await fetch("https://api.openai.com/v1/completions", {
+    //event.preventDefault()
+    fetch("https://api.openai.com/v1/completions", {
       method : 'POST', 
       headers : {
         "Content-Type" : "application/json",
         "Authorization" : "Bearer " + API_KEY 
       }, 
       body : JSON.stringify(API_prompt)
-    }).then((data) => {data.json()
-    console.log(data)}).then((data)=> {console.log(data)
+    }).then((promise) => {promise.json()
+    console.log(promise)}).then((data)=> {console.log(data)
     })//.catch((error) => {console.log("error :  " +error)})
   }
   return (
